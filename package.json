@@ -1,0 +1,14 @@
+{
+  "name": "hello-world-web",
+  "version": "1.0.0",
+  "description": "A simple Hello World web application running on Node.js 22",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "license": "MIT"
+}
