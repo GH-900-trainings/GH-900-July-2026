@@ -51,7 +51,20 @@ function render(data) {
   liveZoneId = localTime?.timeZoneId ?? null;
   document.title = `${cityName} — Weather`;
 
+  const lat = loc?.latitude;
+  const lon = loc?.longitude;
+  const mapSection =
+    typeof lat === 'number' && typeof lon === 'number'
+      ? `
+    <h2 class="h5 mt-4 mb-3">Where in the world</h2>
+    <div class="map-card">
+      <img id="location-map" src="/api/staticmap?lat=${lat}&lon=${lon}&zoom=4&width=1000&height=420"
+           alt="Map showing ${cityName}${loc?.country ? ', ' + loc.country : ''}" />
+    </div>`
+      : '';
+
   root.innerHTML = `
+    <a href="index.html" class="btn-back mb-3">← Back to Main Page</a>
     <div class="detail-hero">
       <div class="d-flex flex-wrap align-items-start justify-content-between gap-3">
         <div>
@@ -112,7 +125,22 @@ function render(data) {
     <h2 class="h5 mt-4 mb-3">Forecast</h2>
     <div class="row g-3">
       ${renderForecast(forecast)}
+    </div>
+    ${mapSection}
+    <div class="mt-4">
+      <a href="index.html" class="btn-back">← Back to Main Page</a>
     </div>`;
+
+  const mapImg = document.getElementById('location-map');
+  if (mapImg) {
+    mapImg.addEventListener('error', () => {
+      const card = mapImg.closest('.map-card');
+      if (card) {
+        card.innerHTML =
+          '<div class="map-fallback">Map preview unavailable.</div>';
+      }
+    });
+  }
 }
 
 async function init() {

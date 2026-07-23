@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { createAzureMapsService } from './src/services/azureMapsService.js';
 import { createWeatherController } from './src/controllers/weatherController.js';
+import { createStaticMapController } from './src/controllers/staticMapController.js';
 import { COUNTRY_GROUPS } from './src/data/countries.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -33,11 +34,18 @@ const azureMapsKey = process.env.AZURE_MAPS_KEY;
 if (azureMapsKey) {
   const azureMaps = createAzureMapsService({ subscriptionKey: azureMapsKey });
   app.get('/api/weather', createWeatherController({ azureMaps }));
+  app.get('/api/staticmap', createStaticMapController({ azureMaps }));
 } else {
   app.get('/api/weather', (req, res) => {
     res.status(503).json({
       error:
         'Weather service is not configured. Set AZURE_MAPS_KEY in your .env file.',
+    });
+  });
+  app.get('/api/staticmap', (req, res) => {
+    res.status(503).json({
+      error:
+        'Map service is not configured. Set AZURE_MAPS_KEY in your .env file.',
     });
   });
 }

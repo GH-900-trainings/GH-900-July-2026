@@ -226,10 +226,74 @@ export function createAzureMapsService({
     };
   }
 
+  /**
+   * Fetches a static map image (PNG) centred on the given coordinates with a
+   * marker pin. Returns the raw bytes so the caller can stream them, keeping
+   * the subscription key server-side.
+   *
+   * @param {number} latitude
+   * @param {number} longitude
+   * @param {object} [options]
+   * @param {number} [options.zoom]
+   * @param {number} [options.width]
+   * @param {number} [options.height]
+   * @returns {Promise<{contentType: string, body: Buffer}>}
+   */
+  async function getStaticMap(
+    latitude,
+    longitude,
+    { zoom = 6, width = 600, height = 400 } = {},
+  ) {
+    const url = new URL(`${AZURE_MAPS_BASE_URL}/map/static/png`);
+    url.searchParams.set('subscription-key', subscriptionKey);
+    url.searchParams.set('api-version', '1.0');
+    url.searchParams.set('layer', 'basic');
+    url.searchParams.set('style', 'main');
+    url.searchParams.set('zoom', String(zoom));
+    url.searchParams.set('center', `${longitude},${latitude}`);
+    url.searchParams.set('width', String(width));
+    url.searchParams.set('height', String(height));
+    url.searchParams.set('pins', `default||${longitude} ${latitude}`);
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), timeoutMs);
+    let response;
+    try {
+      response = await fetchImpl(url, { signal: controller.signal });
+    } catch (error) {
+      if (error?.name === 'AbortError') {
+        throw new AzureMapsError('Azure Maps request timed out.', {
+          status: 504,
+          cause: error,
+        });
+      }
+      throw new AzureMapsError('Failed to reach Azure Maps.', {
+        status: 502,
+        cause: error,
+      });
+    } finally {
+      clearTimeout(timeout);
+    }
+
+    if (!response.ok) {
+      throw new AzureMapsError(
+        `Azure Maps static map request failed with status ${response.status}.`,
+        { status: response.status >= 500 ? 502 : response.status },
+      );
+    }
+
+    const arrayBuffer = await response.arrayBuffer();
+    return {
+      contentType: response.headers?.get?.('content-type') ?? 'image/png',
+      body: Buffer.from(arrayBuffer),
+    };
+  }
+
   return {
     geocode,
     getCurrentConditions,
     getDailyForecast,
     getLocalTime,
+    getStaticMap,
   };
 }

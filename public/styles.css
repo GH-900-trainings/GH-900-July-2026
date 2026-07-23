@@ -1,4 +1,5 @@
-:root {
+:root,
+[data-bs-theme='dark'] {
   --bg-0: #0b1026;
   --bg-1: #141a3a;
   --card-bg: rgba(255, 255, 255, 0.06);
@@ -8,6 +9,26 @@
   --text-muted: #a7b0d6;
   --accent: #7aa2ff;
   --accent-2: #56e0c8;
+  --body-bg:
+    radial-gradient(1200px 600px at 15% -10%, #26306b 0%, transparent 55%),
+    radial-gradient(1000px 500px at 100% 0%, #123a4d 0%, transparent 50%),
+    linear-gradient(160deg, var(--bg-0), var(--bg-1));
+}
+
+[data-bs-theme='light'] {
+  --bg-0: #f5f8ff;
+  --bg-1: #e6edff;
+  --card-bg: rgba(255, 255, 255, 0.72);
+  --card-border: rgba(20, 30, 80, 0.14);
+  --card-border-hover: rgba(59, 91, 219, 0.55);
+  --text-strong: #182042;
+  --text-muted: #5b6488;
+  --accent: #3b5bdb;
+  --accent-2: #0ca678;
+  --body-bg:
+    radial-gradient(1200px 600px at 15% -10%, #cdd9ff 0%, transparent 55%),
+    radial-gradient(1000px 500px at 100% 0%, #d3f1ff 0%, transparent 50%),
+    linear-gradient(160deg, #f7f9ff, #e8eeff);
 }
 
 * {
@@ -19,12 +40,36 @@ body {
   margin: 0;
   color: var(--text-strong);
   font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
-  background:
-    radial-gradient(1200px 600px at 15% -10%, #26306b 0%, transparent 55%),
-    radial-gradient(1000px 500px at 100% 0%, #123a4d 0%, transparent 50%),
-    linear-gradient(160deg, var(--bg-0), var(--bg-1));
+  background: var(--body-bg);
   background-attachment: fixed;
+  transition: color 0.2s ease;
 }
+
+/* Navbar + theme toggle */
+.navbar .navbar-brand {
+  color: var(--text-strong);
+}
+
+.theme-toggle {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text-strong);
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: border-color 0.18s ease, background 0.18s ease;
+}
+
+.theme-toggle:hover {
+  border-color: var(--card-border-hover);
+}
+
 
 .app-header {
   padding: 3rem 0 1rem;
@@ -319,3 +364,50 @@ a.back-link {
 a.back-link:hover {
   color: var(--text-strong);
 }
+
+/* Back to main page button */
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 0.55rem 1.15rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 10px 24px -12px rgba(90, 130, 255, 0.8);
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+
+.btn-back:hover {
+  color: #fff;
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+/* Location map */
+.map-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 0.5rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  overflow: hidden;
+}
+
+.map-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+}
+
+.map-card .map-fallback {
+  padding: 2rem;
+  text-align: center;
+  color: var(--text-muted);
+}
+
