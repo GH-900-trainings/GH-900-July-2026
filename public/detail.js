@@ -122,11 +122,11 @@ function render(data) {
       </div>
     </div>
 
+    ${mapSection}
     <h2 class="h5 mt-4 mb-3">Forecast</h2>
     <div class="row g-3">
       ${renderForecast(forecast)}
     </div>
-    ${mapSection}
     <div class="mt-4">
       <a href="index.html" class="btn-back">← Back to Main Page</a>
     </div>`;
