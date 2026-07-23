@@ -1,6 +1,10 @@
 import express from 'express';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
 import { createAzureMapsService } from './src/services/azureMapsService.js';
 import { createWeatherController } from './src/controllers/weatherController.js';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // Load environment variables from a local `.env` file when present. The file
 // is git-ignored so secrets such as the Azure Maps key stay out of source
@@ -15,9 +19,7 @@ try {
 const app = express();
 const PORT = process.env.PORT ?? 3000;
 
-app.get('/', (req, res) => {
-  res.send(`<h1>Hello, World!</h1><p>Running on Node.js ${process.version}</p>`);
-});
+app.use(express.static(join(__dirname, 'public')));
 
 // Weather & time API. Requires AZURE_MAPS_KEY to be configured.
 const azureMapsKey = process.env.AZURE_MAPS_KEY;
