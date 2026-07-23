@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { createAzureMapsService } from './src/services/azureMapsService.js';
 import { createWeatherController } from './src/controllers/weatherController.js';
+import { COUNTRY_GROUPS } from './src/data/countries.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -20,6 +21,12 @@ const app = express();
 const PORT = process.env.PORT ?? 3000;
 
 app.use(express.static(join(__dirname, 'public')));
+
+// Supported cities grouped into country buckets, each with a national flag
+// emoji. Static data, so this endpoint is always available.
+app.get('/api/cities', (req, res) => {
+  res.json({ countries: COUNTRY_GROUPS });
+});
 
 // Weather & time API. Requires AZURE_MAPS_KEY to be configured.
 const azureMapsKey = process.env.AZURE_MAPS_KEY;

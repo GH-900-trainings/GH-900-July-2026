@@ -1,4 +1,5 @@
 import { AzureMapsError } from '../services/azureMapsService.js';
+import { countryCodeToFlag, findCountryByCity } from '../data/countries.js';
 
 // Bounds for the number of forecast days a caller may request.
 const MIN_FORECAST_DAYS = 1;
@@ -51,6 +52,13 @@ export function createWeatherController({ azureMaps }) {
 
     try {
       const place = await azureMaps.geocode(location);
+
+      // Resolve the national flag from the geocoded country code, falling back
+      // to our curated city -> country buckets when the code is unavailable.
+      const bucket = findCountryByCity(location);
+      const flag = countryCodeToFlag(place.countryCode) ?? bucket?.flag ?? null;
+      const country = place.country ?? bucket?.country ?? null;
+
       const [current, forecast, time] = await Promise.all([
         azureMaps.getCurrentConditions(place.latitude, place.longitude),
         azureMaps.getDailyForecast(place.latitude, place.longitude, days),
@@ -61,6 +69,8 @@ export function createWeatherController({ azureMaps }) {
         location: {
           query: location,
           resolvedName: place.name,
+          country,
+          flag,
           latitude: place.latitude,
           longitude: place.longitude,
         },

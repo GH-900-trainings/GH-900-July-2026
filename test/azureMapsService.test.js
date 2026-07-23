@@ -48,7 +48,11 @@ test('geocode resolves a location to coordinates and sends the key', async () =>
       body: {
         results: [
           {
-            address: { freeformAddress: 'London, United Kingdom' },
+            address: {
+              freeformAddress: 'London, United Kingdom',
+              country: 'United Kingdom',
+              countryCode: 'GB',
+            },
             position: { lat: 51.5, lon: -0.12 },
           },
         ],
@@ -63,6 +67,8 @@ test('geocode resolves a location to coordinates and sends the key', async () =>
   const place = await service.geocode('London');
   assert.deepEqual(place, {
     name: 'London, United Kingdom',
+    country: 'United Kingdom',
+    countryCode: 'GB',
     latitude: 51.5,
     longitude: -0.12,
   });

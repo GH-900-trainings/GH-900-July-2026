@@ -136,6 +136,8 @@ export function createAzureMapsService({
     }
     return {
       name: match.address?.freeformAddress ?? query,
+      country: match.address?.country ?? null,
+      countryCode: match.address?.countryCode ?? null,
       latitude: match.position.lat,
       longitude: match.position.lon,
     };
