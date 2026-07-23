@@ -1,11 +1,13 @@
 import express from 'express';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
 
-app.get('/', (req, res) => {
-  res.send(`<h1>Hello, World!</h1><p>Running on Node.js ${process.version}</p>`);
-});
+app.use(express.static(join(__dirname, 'public')));
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
