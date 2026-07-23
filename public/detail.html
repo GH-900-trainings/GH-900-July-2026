@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>World Weather — by Country</title>
+    <title>Weather Detail</title>
     <!-- Bootstrap 5 CSS (CDN) -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
@@ -17,15 +17,11 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container">
         <a class="navbar-brand fw-bold" href="index.html">🌤️ World Weather</a>
+        <a class="back-link ms-auto" href="index.html">← All cities</a>
       </div>
     </nav>
 
-    <header class="app-header container">
-      <h1>Live Weather by Country</h1>
-      <p>Current time and conditions across cities — tap any card for the full forecast.</p>
-    </header>
-
-    <main class="container pb-5" id="board" aria-live="polite"></main>
+    <main class="container py-4" id="detail-root" aria-live="polite"></main>
 
     <!-- Bootstrap 5 JS bundle (CDN) -->
     <script
@@ -33,6 +29,6 @@
       integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
       crossorigin="anonymous"
     ></script>
-    <script type="module" src="app.js"></script>
+    <script type="module" src="detail.js"></script>
   </body>
 </html>
