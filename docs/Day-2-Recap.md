@@ -395,6 +395,22 @@ These areas were highlighted as commonly appearing in exam questions.
 
 - [InnerSource Fundamentals](https://learn.microsoft.com/en-us/training/modules/manage-innersource-program-github/3-innersource-fundamentals)
 
+### Lab 8
+
+- [Secure Your Repository's Supply Chain](https://learn.microsoft.com/en-us/training/modules/maintain-secure-repository-github/3-security-strategy-essentials)
+
+### Lab 9
+
+- [Reviewing Pull Requests](https://learn.microsoft.com/en-us/training/modules/manage-changes-pull-requests-github/3-review-pull-requests)
+
+### Lab 10
+
+- [Set Up GitHub Copilot to Work with Visual Studio Code](https://learn.microsoft.com/en-us/training/modules/introduction-copilot-python/3-exercise-setup)
+
+### Lab 11
+
+- [Update a Python Web API with GitHub Copilot](https://learn.microsoft.com/en-us/training/modules/introduction-copilot-python/5-exercise-python-web-api)
+
 ## ✅ Action Items After Training
 
 - Review GitHub Actions workflows
@@ -402,7 +418,7 @@ These areas were highlighted as commonly appearing in exam questions.
 - Explore Dependabot and CodeQL
 - Build a simple GitHub Project board
 - Review GitHub administration settings
-- Complete Lab 6 and Lab 7
+- Complete Labs 6 through 11
 - Begin GH-900 exam preparation using the course repository and certification resources
 
 ## ⭐ IMPORTANT – Course Survey
