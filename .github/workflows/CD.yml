@@ -58,7 +58,7 @@ jobs:
       packages: write
     steps:
       - name: Checkout the commit that passed CI
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           # Build the exact commit CI validated (falls back to the ref for
           # manual runs).
