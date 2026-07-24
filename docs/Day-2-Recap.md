@@ -375,6 +375,14 @@ These areas were highlighted as commonly appearing in exam questions.
 
 - [GitHub Foundations Certification](https://learn.microsoft.com/en-us/credentials/certifications/github-foundations)
 
+### GH-900 Video Playlist (Microsoft Learn on YouTube)
+
+- [Course Preview | GH-900 | GitHub Foundations](https://www.youtube.com/watch?v=GKS32EgbzUc&list=PLahhVEj9XNTf5iQVK_80RdvTju7ov6RYy)
+
+### Microsoft Practice Assessments
+
+- [Practice Assessments for Microsoft Certifications | Microsoft Learn](https://learn.microsoft.com/en-us/credentials/certifications/practice-assessments-for-microsoft-certifications)
+
 ### Kubernetes Pull Request Example
 
 - [Kubernetes Pull Requests](https://github.com/kubernetes/kube-openapi/pulls)
