@@ -1,4 +1,11 @@
+[![CI](https://github.com/GH-900-trainings/GH-900-July-2026/actions/workflows/ci.yml/badge.svg)](https://github.com/GH-900-trainings/GH-900-July-2026/actions/workflows/ci.yml) [![CD](https://github.com/GH-900-trainings/GH-900-July-2026/actions/workflows/CD.yml/badge.svg)](https://github.com/GH-900-trainings/GH-900-July-2026/actions/workflows/CD.yml)
+
 # GH-900-July-2026 — Weather & Time app
+
+> 📘 **Recaps:** [Day 1](docs/Day-1-Recap.md) · [Day 2](docs/Day-2-Recap.md) —
+> summaries of everything covered each day: Git & GitHub, version control,
+> GitHub Flow, Copilot, security, GitHub Actions & CI/CD, Docker, Packages,
+> administration, and exam tips.
 
 GH-900 training project: a small **Node.js 22 + Express** web app that shows
 **live weather** and the **local time** for cities around the world, powered by
