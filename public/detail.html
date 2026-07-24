@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>World Weather — by Country</title>
+    <title>Weather Detail</title>
     <!-- Apply saved theme before paint to avoid a flash of the wrong theme. -->
     <script>
       (function () {
@@ -24,19 +24,17 @@
     <nav class="navbar navbar-expand-lg">
       <div class="container">
         <a class="navbar-brand fw-bold" href="index.html">🌤️ World Weather</a>
-        <button id="theme-toggle" class="theme-toggle ms-auto" type="button" aria-pressed="true">
-          <span class="theme-icon">🌙</span>
-          <span class="theme-label d-none d-sm-inline">Dark</span>
-        </button>
+        <div class="ms-auto d-flex align-items-center gap-2">
+          <a class="back-link" href="index.html">← All cities</a>
+          <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="true">
+            <span class="theme-icon">🌙</span>
+            <span class="theme-label d-none d-sm-inline">Dark</span>
+          </button>
+        </div>
       </div>
     </nav>
 
-    <header class="app-header container">
-      <h1>Live Weather by Country</h1>
-      <p>Current time and conditions across cities — tap any card for the full forecast.</p>
-    </header>
-
-    <main class="container pb-5" id="board" aria-live="polite"></main>
+    <main class="container py-4" id="detail-root" aria-live="polite"></main>
 
     <!-- Bootstrap 5 JS bundle (CDN) -->
     <script
@@ -45,6 +43,6 @@
       crossorigin="anonymous"
     ></script>
     <script src="theme.js" defer></script>
-    <script type="module" src="app.js"></script>
+    <script type="module" src="detail.js"></script>
   </body>
 </html>

@@ -19,7 +19,13 @@ function makeRes() {
   };
 }
 
-const place = { name: 'London, UK', latitude: 51.5, longitude: -0.12 };
+const place = {
+  name: 'London, UK',
+  country: 'United Kingdom',
+  countryCode: 'GB',
+  latitude: 51.5,
+  longitude: -0.12,
+};
 const current = {
   temperatureC: 20,
   humidity: 50,
@@ -74,6 +80,8 @@ test('returns combined weather and local time payload', async () => {
     location: {
       query: 'London',
       resolvedName: 'London, UK',
+      country: 'United Kingdom',
+      flag: '🇬🇧',
       latitude: 51.5,
       longitude: -0.12,
     },
@@ -81,6 +89,25 @@ test('returns combined weather and local time payload', async () => {
     current,
     forecast,
   });
+});
+
+test('falls back to the city bucket flag when Azure returns no country code', async () => {
+  const azureMaps = makeAzureMaps({
+    geocode: async () => ({
+      name: 'Penang, Malaysia',
+      country: null,
+      countryCode: null,
+      latitude: 5.41,
+      longitude: 100.33,
+    }),
+  });
+  const handler = createWeatherController({ azureMaps });
+  const res = makeRes();
+  await handler({ query: { location: 'Penang' } }, res);
+
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.body.location.flag, '🇲🇾');
+  assert.equal(res.body.location.country, 'Malaysia');
 });
 
 test('clamps requested days to the 1-7 range', async () => {
