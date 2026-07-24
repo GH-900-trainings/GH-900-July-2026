@@ -1,0 +1,26 @@
+# Dependabot keeps dependencies up to date by opening PRs. Those PRs then run
+# through the CI workflow (including the dependency-review job) so you can see
+# whether the update is safe to use before merging.
+version: 2
+updates:
+  # Application dependencies (Express, etc.)
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "npm"
+
+  # Keep the GitHub Actions used in the workflows below up to date.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "ci"

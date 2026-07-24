@@ -1,0 +1,36 @@
+# Reusable workflow: runs the unit test suite. The Azure Maps key is provided
+# from the repository secret AZURE_MAPS_KEY_SECRET and exposed to the app under
+# the AZURE_MAPS_KEY environment variable it expects. Called by ci.yml.
+name: Unit Tests
+
+on:
+  workflow_call:
+    secrets:
+      AZURE_MAPS_KEY_SECRET:
+        description: "Azure Maps subscription key used by the tests."
+        required: false
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies (clean)
+        run: npm ci
+
+      - name: Run unit tests
+        env:
+          AZURE_MAPS_KEY: ${{ secrets.AZURE_MAPS_KEY_SECRET }}
+        run: npm test
