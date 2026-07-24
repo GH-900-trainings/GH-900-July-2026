@@ -1,0 +1,53 @@
+# Orchestrator workflow. Keeps each concern in its own reusable workflow file
+# (build / audit / dependency-review / test) and wires them together as
+# separate jobs:
+#
+#   build ─┐
+#   audit ─┼─► test   (unit tests only run once the checks are green)
+#   dependency-review ─┘
+#
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build
+    uses: ./.github/workflows/build.yml
+
+  audit:
+    name: Dependency audit
+    uses: ./.github/workflows/audit.yml
+
+  # Dependency review only runs on pull requests (it diffs the PR's changes).
+  dependency-review:
+    name: Dependency review
+    if: github.event_name == 'pull_request'
+    uses: ./.github/workflows/dependency-review.yml
+
+  # Unit tests run only after build + dependency checks are OK. On pushes the
+  # dependency-review job is skipped, which is treated as acceptable here.
+  test:
+    name: Unit tests
+    needs: [build, audit, dependency-review]
+    if: >-
+      always() &&
+      needs.build.result == 'success' &&
+      needs.audit.result == 'success' &&
+      (needs.dependency-review.result == 'success' ||
+       needs.dependency-review.result == 'skipped')
+    uses: ./.github/workflows/test.yml
+    secrets:
+      AZURE_MAPS_KEY_SECRET: ${{ secrets.AZURE_MAPS_KEY_SECRET }}

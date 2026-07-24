@@ -1,0 +1,29 @@
+# Reusable workflow: checks the installed dependencies for known security
+# vulnerabilities. Fails the run on high/critical advisories. Called by ci.yml.
+name: Dependency Audit
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    name: npm audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies (clean)
+        run: npm ci
+
+      - name: Audit dependencies
+        run: npm audit --audit-level=high

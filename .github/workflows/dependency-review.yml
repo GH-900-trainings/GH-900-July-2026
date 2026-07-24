@@ -1,0 +1,23 @@
+# Reusable workflow: reviews dependency changes in a pull request using
+# GitHub's advisory (Dependabot) database, blocking risky additions before they
+# are merged. Only meaningful on pull_request events. Called by ci.yml.
+name: Dependency Review
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  dependency-review:
+    name: Dependency review
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Review dependencies
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: high
